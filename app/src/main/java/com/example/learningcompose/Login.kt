@@ -50,14 +50,13 @@ fun LoginScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(colorResource(id = R.color.white))
     ) {
-//        Image(
-//            painter = painterResource(id = R.drawable.background),
-//            contentDescription = null,
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.Crop
-//        )
+        Image(
+            painter = painterResource(id = R.drawable.background),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
         Scaffold(
             modifier = Modifier.fillMaxSize(),
         ) { paddingValues ->
