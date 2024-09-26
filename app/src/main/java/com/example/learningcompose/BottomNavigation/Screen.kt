@@ -1,12 +1,12 @@
-//package com.example.learningcompose.BottomNavigation
-//import androidx.compose.material.icons.Icons
-//import androidx.compose.material.icons.filled.Home
-//import androidx.compose.material.icons.filled.Person
-//import androidx.compose.material.icons.filled.Settings
-//import androidx.compose.ui.graphics.vector.ImageVector
-//
-//sealed class Screen(val route: String, val icon: ImageVector, val title: String) {
-//    data object Home : Screen("home", Icons.Default.Home, "Home")
-//    data object Profile : Screen("profile", Icons.Default.Person, "Profile")
-//    data object Search : Screen("search", Icons.Default.Settings, "Settings")
-//}
+import androidx.annotation.DrawableRes
+import com.example.learningcompose.R
+
+sealed class BottomNavItem(
+    val route: String,
+    @DrawableRes val icon: Int,
+    val label: String)
+
+data object Home : BottomNavItem("home", icon = R.drawable.home, "Home")
+data object Search : BottomNavItem("search", icon = R.drawable.search, "Search")
+data object Profile : BottomNavItem("profile", icon = R.drawable.user, "Profile")
+data object News : BottomNavItem("news", icon = R.drawable.news, "News")

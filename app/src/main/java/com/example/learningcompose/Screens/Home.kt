@@ -1,12 +1,12 @@
-package com.example.learningcompose
-
+package com.example.learningcompose.Screens
+import BottomNavigation
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,19 +16,23 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
-    Surface(modifier = Modifier.fillMaxSize(), color = Color.White) {
+
+    Scaffold(
+        bottomBar = { BottomNavigation(navController) },
+    ) { innerPadding ->
         Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .background(color = Color.White),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Home Page",
                 color = Color.Black,
-                fontSize = 32.sp)
-            ElevatedButton(onClick = {navController.popBackStack()}) {
-                Text(text = "Change Page")
-            }
+                fontSize = 32.sp
+            )
         }
     }
-
 }
