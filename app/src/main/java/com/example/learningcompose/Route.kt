@@ -18,5 +18,6 @@ fun Route(navController: NavHostController) {
         composable("search") { SearchScreen(navController) }
         composable("profile") { ProfileScreen(navController) }
         composable("news") { NewsScreen(navController) }
+        composable("signup") { SignUpScreen(navController) }
     }
 }

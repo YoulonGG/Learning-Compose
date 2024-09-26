@@ -1,5 +1,6 @@
 package com.example.learningcompose
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -46,30 +48,27 @@ fun LoginScreen(navController: NavController?) {
     val styleTextField = TextStyle(fontSize = 16.sp)
 
     val green = colorResource(id = R.color.green)
-
     Box(
         modifier = Modifier
             .fillMaxSize()
     ) {
         Image(
-            painter = painterResource(id = R.drawable.background),
+            painter = painterResource(id = R.drawable.bg2),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
-
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+        ) {
             Text(
                 text = "Login",
                 color = colorResource(id = R.color.white),
                 fontSize = 42.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(42.dp))
@@ -91,7 +90,7 @@ fun LoginScreen(navController: NavController?) {
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 52.dp)
+                    .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
                     .height(48.dp)
             )
@@ -115,7 +114,7 @@ fun LoginScreen(navController: NavController?) {
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 52.dp)
+                    .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
                     .height(48.dp)
             )
@@ -130,7 +129,7 @@ fun LoginScreen(navController: NavController?) {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 52.dp)
+                    .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
                     .height(48.dp)
             ) {
@@ -144,47 +143,89 @@ fun LoginScreen(navController: NavController?) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.padding(horizontal = 5.dp, vertical = 16.dp)
             ) {
-               Text(
-                   text = "Forget your password?",
-                   fontSize = 16.sp,
-                   color = Color.White,
-               )
+                Text(
+                    text = "Forget your password?",
+                    fontSize = 16.sp,
+                    color = Color.Gray,
+                    modifier = Modifier
+//                       .shadow(elevation = 8.dp)
+                )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Sign Up",
                     fontSize = 16.sp,
-                    color = green
+                    color = green,
+                    modifier = Modifier
+                        .clickable { navController?.navigate("signup") }
+//                        .shadow(elevation = 8.dp)
                 )
             }
-//            Row(
-//                modifier = Modifier.fillMaxWidth()
-//            ) {
-//                Button(
-//                    onClick = {},
-//                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.white)),
-//                    modifier = Modifier
-//                        .shadow(elevation = 8.dp)
-//                        .height(48.dp)
-//                ) {
-//                    Image(
-//                        modifier = Modifier
-//                            .width(35.dp)
-//                            .height(35.dp),
-//                        painter = painterResource(id = R.drawable.fbb),
-//                        contentDescription = null
-//                    )
-//                    Spacer(modifier = Modifier.width(8.dp))
-//                    Text(
-//                        text = "Facebook",
-//                        fontSize = 18.sp,
-//                        color = Color.White
-//                    )
-//                }
+            Text(
+                text = "Or Sign in with",
+                fontSize = 16.sp,
+                color = Color.Gray,
+                modifier = Modifier
+                    .padding(top = 32.dp)
+            )
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp)
+                    .padding(top = 10.dp)
+            ) {
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.white)),
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .shadow(elevation = 8.dp)
+                        .height(48.dp)
+                        .weight(1f)
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .width(35.dp)
+                            .height(35.dp),
+                        painter = painterResource(id = R.drawable.fbb),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Facebook",
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                }
+                Spacer(modifier = Modifier.width(10.dp))
+                Button(
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.white)),
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier
+                        .shadow(elevation = 8.dp)
+                        .height(48.dp)
+                        .weight(1f)
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .width(35.dp)
+                            .height(35.dp),
+                        painter = painterResource(id = R.drawable.google),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Google",
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                }
 
             }
         }
     }
-//}
+}
 
 @Preview(showSystemUi = true)
 @Composable
