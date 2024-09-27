@@ -1,7 +1,6 @@
 package com.example.learningcompose
 import UserViewModel
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,7 +12,7 @@ import com.example.learningcompose.screens.SearchScreen
 @Composable
 fun Route(navController: NavHostController) {
 
-    val userViewModel: UserViewModel = viewModel()
+    val userViewModel = UserViewModel()
 
     NavHost(navController, startDestination = "splash") {
         composable("splash") { SplashScreen(navController) }

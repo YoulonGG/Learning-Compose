@@ -17,14 +17,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,26 +39,38 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val styleTextField = TextStyle(fontSize = 18.sp)
-    val userState by viewModel.state.collectAsState()
 
-    val green = colorResource(id = R.color.green)
-    val orange = colorResource(id = R.color.orange)
+//    val userState1 by viewModel.state.collectAsState()
+    val userState by viewModel.state.collectAsStateWithLifecycle()
+//    val userState2 = viewModel.state
+
+    val colors = TextFieldDefaults.colors(
+        focusedContainerColor = Color.White,
+        unfocusedContainerColor = Color.White,
+        disabledContainerColor = Color.White,
+        focusedIndicatorColor = Color.Transparent,
+        unfocusedIndicatorColor = Color.Transparent,
+        disabledIndicatorColor = Color.Transparent
+    )
 
     LaunchedEffect(userState.error) {
         if (userState.error == null && name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
             navController.navigate("home")
         }
     }
+
+    val green = colorResource(id = R.color.green)
+    val orange = colorResource(id = R.color.orange)
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -89,12 +99,7 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
                 placeholder = { Text("Username", style = TextStyle(fontSize = 16.sp)) },
                 isError = userState.error?.property == "name",
                 shape = RoundedCornerShape(10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White
-                ),
+                colors = colors,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -109,12 +114,7 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
                 onValueChange = { password = it },
                 isError = userState.error?.property == "password",
                 shape = RoundedCornerShape(10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White
-                ),
+                colors = colors,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -129,12 +129,7 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
                 placeholder = { Text("Email", style = TextStyle(fontSize = 16.sp)) },
                 isError = userState.error?.property == "email",
                 shape = RoundedCornerShape(10.dp),
-                colors = TextFieldDefaults.textFieldColors(
-                    focusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    containerColor = Color.White
-                ),
+                colors = colors,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
@@ -146,7 +141,10 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
                     text = error.message,
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.End,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp,).padding(top = 10.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 32.dp)
+                        .padding(top = 10.dp)
                 )
             }
             Spacer(modifier = Modifier.height(32.dp))
@@ -154,16 +152,16 @@ fun LoginScreen(navController: NavController, viewModel: UserViewModel) {
                 onClick = {
                     val fields = mapOf("name" to name, "email" to email, "password" to password)
                     fields.entries.firstOrNull { it.value.isEmpty() }?.let { (field, _) ->
-                        viewModel.updateProperty(userState.copy(error = ValidationError(field, "${field.replaceFirstChar {
-                            if (it.isLowerCase()) it.titlecase(
-                                Locale.ROOT
-                            ) else it.toString()
-                        }} cannot be empty")))
+                        viewModel.updateProperty(
+                            userState.copy(
+                                error = ValidationError(field, "${field.replaceFirstChar { it.titlecase(Locale.ROOT) }} cannot be empty")
+                            )
+                        )
                     } ?: run {
                         viewModel.updateProperty(userState.copy(name = name, email = email, password = password))
                         viewModel.save()
                     }
-                },
+            },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.green)),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier
