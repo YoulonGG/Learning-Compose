@@ -18,7 +18,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -28,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -43,12 +43,14 @@ import androidx.navigation.NavHostController
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpScreen(navController: NavHostController) {
+
     val txtSignUpUsername = remember { mutableStateOf(TextFieldValue()) }
     val txtSignUpPassword = remember { mutableStateOf(TextFieldValue()) }
     val txtConfirmPassword = remember { mutableStateOf(TextFieldValue()) }
     val styleTextField = TextStyle(fontSize = 16.sp)
-
+    val orange = colorResource(id = R.color.orange)
     val green = colorResource(id = R.color.green)
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -66,11 +68,14 @@ fun SignUpScreen(navController: NavHostController) {
         ) {
             Text(
                 text = "Sign Up",
-                color = colorResource(id = R.color.white),
                 fontSize = 42.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
+                style = TextStyle(
+                    brush = Brush.linearGradient(
+                        colors = listOf(orange, green)
+                    )
+                )
             )
 
             Spacer(modifier = Modifier.height(42.dp))
@@ -94,12 +99,12 @@ fun SignUpScreen(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
-                    .height(48.dp)
+                    .height(50.dp)
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            OutlinedTextField(
+            TextField(
                 value = txtSignUpPassword.value,
                 textStyle = styleTextField,
                 onValueChange = { txtSignUpPassword.value = it },
@@ -118,7 +123,7 @@ fun SignUpScreen(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
-                    .height(48.dp)
+                    .height(50.dp)
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -149,7 +154,7 @@ fun SignUpScreen(navController: NavHostController) {
 
             Button(
                 onClick = {
-                    navController?.navigate("Home")
+                    navController.navigate("login")
                 },
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(id = R.color.green)),
                 shape = RoundedCornerShape(10.dp),
@@ -157,10 +162,10 @@ fun SignUpScreen(navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
                     .shadow(elevation = 8.dp)
-                    .height(48.dp)
+                    .height(50.dp)
             ) {
                 Text(
-                    text = "Login",
+                    text = "Sign Up",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -181,7 +186,6 @@ fun SignUpScreen(navController: NavHostController) {
                     color = green,
                     modifier = Modifier
                         .clickable { navController.navigate("login") }
-//                        .shadow(elevation = 8.dp)
                 )
             }
         }

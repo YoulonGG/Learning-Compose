@@ -1,4 +1,4 @@
-package com.example.learningcompose.Screens
+package com.example.learningcompose.screens
 
 import BottomNavigation
 import androidx.compose.foundation.background

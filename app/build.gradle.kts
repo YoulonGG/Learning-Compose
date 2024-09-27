@@ -50,22 +50,38 @@ android {
 }
 
 dependencies {
+    // Core libraries
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+
+    // Compose libraries
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.navigation.compose)
+
+    // Optional alpha dependency (comment if not needed)
+    // implementation(libs.androidx.navigation.compose.v240alpha01)
+
+    // UI libraries
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
+
+    // Splash screen support
+    implementation(libs.androidx.core.splashscreen)
+
+    // Testing libraries
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+
+    // Debugging tools
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.navigation.compose.v240alpha01)
+
+    // Reflection library
+    implementation(libs.kotlin.reflect)
 }
