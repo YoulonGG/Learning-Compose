@@ -18,22 +18,21 @@ data class ValidationError(
 class UserViewModel : ViewModel() {
 
     //We use MutableStateFlow to hold multiple pieces of state
-    private val _state = MutableStateFlow(UserState())
-    val state: StateFlow<UserState> = _state
+    //First assign all the state values to MutableStateFlow
+    //And then assign that MutableStateFlow to state (read only)
+    private val userState = MutableStateFlow(UserState())
+    val state: StateFlow<UserState> = userState
 
     fun updateProperty(newState: UserState) {
-//        _state.value = newState
+//        userState.value = newState
         // Use update to ensure that your state updates are performed correctly
         //and update is from MutableStateFlow
-        _state.update { newState }
+        userState.update { newState }
     }
 
     fun save() {
         val error = validate(state.value)
-
-        _state.update { currentState ->
-            currentState.copy(error = error)
-        }
+        userState.update { currentState -> currentState.copy(error = error) }
     }
 
     private fun validate(userState: UserState): ValidationError? {

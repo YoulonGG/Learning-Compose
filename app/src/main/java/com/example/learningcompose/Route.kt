@@ -1,4 +1,5 @@
 package com.example.learningcompose
+import FormScreen
 import UserViewModel
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -13,8 +14,10 @@ import com.example.learningcompose.screens.SearchScreen
 fun Route(navController: NavHostController) {
 
     val userViewModel = UserViewModel()
+    val testViewModel = FormViewModel()
 
-    NavHost(navController, startDestination = "splash") {
+    NavHost(navController, startDestination = "test") {
+        composable("test") { FormScreen(testViewModel) }
         composable("splash") { SplashScreen(navController) }
         composable("login") { LoginScreen(navController, userViewModel) }
         composable("home") { HomeScreen(navController) }
